@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import './App.css';
 import { BarcodeReader } from "dynamsoft-javascript-barcode";
 
-BarcodeReader.engineResourcePath = "https://cdn.jsdelivr.net/npm/dynamsoft-javascript-barcode@9.0.2/dist/";
+BarcodeReader.engineResourcePath = "https://unpkg.com/dynamsoft-javascript-barcode@9.0.2/dist/";
 
 function App() {
   const [active,setActive] = useState(false);
