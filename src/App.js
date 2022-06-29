@@ -106,9 +106,6 @@ function App() {
       </camera-preview>
       <div style={{display:active ? 'none' : ''}}>
         <button onClick={startCamera} >Start Scanning</button>
-        <p>
-        {continuous ? 'Checked' : 'Not checked'}
-        </p> 
         <label>
         <input
           type="checkbox"
