@@ -7,14 +7,12 @@ BarcodeReader.engineResourcePath = "https://cdn.jsdelivr.net/npm/dynamsoft-javas
 function App() {
   const [active,setActive] = useState(false);
   const [continuous,setContinuous] = useState(true);
+  const continuousRef = useRef(continuous);
   const decoding = useRef(false);
   const interval = useRef(null);
   const scanned = useRef(false);
   const reader = useRef(null);
   const cameraElement = useRef(null);
-
-  console.log("continuous:");
-  console.log(continuous);
 
   const startCamera = () => {
     setActive(true);
@@ -51,21 +49,19 @@ function App() {
   }
 
   const decode = async () => {
-    if (decoding.current === false && reader) {
+    if (decoding.current === false && reader.current) {
       console.log("decoding");
       const video = await cameraElement.current.getVideoElement();
       decoding.current = true;
       try {
-        var results = await reader.current.decode(video);
-        await cameraElement.current.updateAnalysingResults(wrapResults(results));
-
-        console.log(scanned.current);
-        console.log(continuous);
-        if (results.length>0 && scanned.current === false && continuous === false) {
+        let results = await reader.current.decode(video);
+        if (results.length>0 && scanned.current === false && continuousRef.current === false) {
           scanned.current = true;
           stopDecoding();
           stopCamera();
           alert(results[0].barcodeText);
+        }else{
+          await cameraElement.current.updateAnalysingResults(wrapResults(results));
         }
 
       } catch (error) {
@@ -93,9 +89,8 @@ function App() {
   }
 
   const updateContinuous = (e) => {
-    console.log("updateContinuous");
-    console.log(e);
     setContinuous(!continuous);
+    continuousRef.current = !continuous;
   }
 
   return (
@@ -111,6 +106,9 @@ function App() {
       </camera-preview>
       <div style={{display:active ? 'none' : ''}}>
         <button onClick={startCamera} >Start Scanning</button>
+        <p>
+        {continuous ? 'Checked' : 'Not checked'}
+        </p> 
         <label>
         <input
           type="checkbox"
