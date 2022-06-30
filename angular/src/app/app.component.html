@@ -26,15 +26,18 @@
 <div>
   <div [ngStyle]="{'display':active ? 'none':''}">
     <button (click)="startCamera()">Start Camera</button>
+    <input (change)="continuousChange($event)" name="continuous" value="continuous" type="checkbox" /> 
+    <label>Continuous Scan</label>
   </div>
   <camera-preview 
-    ref={cameraElement}
-    active={active}
+    ngModel #cameraElement
     desired-camera="founder"
-    draw-overlay={true}
+    draw-overlay="true"
+    (opened)="onOpened()" 
+    [active]="active"
     [ngStyle]="{'display':active ? '':'none'}"
   >
-    <button id="close-btn" (click)="closeCamera()">Close</button>
+    <button id="close-btn" (click)="stopCamera()">Close</button>
   </camera-preview>
 </div>
 
