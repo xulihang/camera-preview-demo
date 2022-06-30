@@ -1,0 +1,40 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  camera-preview {
+    height:100%;
+    width:100%;
+    position: absolute;
+    right:0;
+    top:0;
+  }
+
+  #close-btn {
+    position:absolute;
+    right:0;
+    top:0;
+  }
+</style>
+
+<div>
+  <div [ngStyle]="{'display':active ? 'none':''}">
+    <button (click)="startCamera()">Start Camera</button>
+  </div>
+  <camera-preview 
+    ref={cameraElement}
+    active={active}
+    desired-camera="founder"
+    draw-overlay={true}
+    [ngStyle]="{'display':active ? '':'none'}"
+  >
+    <button id="close-btn" (click)="closeCamera()">Close</button>
+  </camera-preview>
+</div>
+
