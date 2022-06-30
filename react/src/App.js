@@ -33,7 +33,7 @@ function App() {
       reader.current = await BarcodeReader.createInstance();
     }
     init();
-    cameraElement.current.onOpened = onOpened;
+    cameraElement.current.addEventListener("opened",onOpened);
     cameraElement.current.desiredResolution = {width:1280,height:720};
   }, []);
 
