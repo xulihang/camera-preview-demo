@@ -103,4 +103,10 @@
     right:0;
     top:0;
   }
+
+  #close-btn {
+    position:absolute;
+    right:0;
+    top:0;
+  }
 </style>
