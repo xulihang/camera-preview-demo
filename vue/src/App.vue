@@ -7,6 +7,7 @@
   let scanned = false;
   let decoding = false;
   let interval:any = null;
+  const initialized = ref(false);
   const continuous = ref(false);
   const cameraElement:any = ref(null);
   const active = ref(false);
@@ -14,6 +15,7 @@
   onMounted(async () => {
     BarcodeReader.license = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==";
     reader = await BarcodeReader.createInstance();
+    initialized.value = true;
   })
 
   const startCamera = () => {
@@ -64,7 +66,7 @@
   }
 
   const wrapResults = (results:TextResult[]) => {
-    let analysingResults = [];
+    let analysingResults:any[] = [];
     for (let index = 0; index < results.length; index++) {
       const result = results[index];
       let analysingResult:any = {};
@@ -83,6 +85,9 @@
 
 <template>
   <div :style="{display: active ? 'none' : '' }">
+    <div v-if="!initialized">
+      Initializing Barcode Reader...
+    </div>
     <button v-on:click="startCamera">Start Camera</button>
     <label>
     <input type="checkbox" v-model="continuous" />
