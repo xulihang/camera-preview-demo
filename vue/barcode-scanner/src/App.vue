@@ -7,6 +7,7 @@
   let scanned = false;
   let decoding = false;
   let interval:any = null;
+  const continuous = ref(false);
   const cameraElement:any = ref(null);
   const active = ref(false);
 
@@ -45,7 +46,7 @@
       decoding = true;
       try {
         let results = await reader.decode(video);
-        if (results.length>0 && scanned === false) {
+        if (results.length>0 && scanned === false && continuous.value === false) {
           scanned = true;
           stopDecoding();
           stopCamera();
@@ -82,6 +83,10 @@
 <template>
   <div :style="{display: active ? 'none' : '' }">
     <button v-on:click="startCamera">Start Camera</button>
+    <label>
+    <input type="checkbox" v-model="continuous" />
+    Continuous Scan
+    </label>
   </div>
   <camera-preview 
     ref="cameraElement"
