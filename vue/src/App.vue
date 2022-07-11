@@ -96,7 +96,7 @@
   </div>
   <camera-preview 
     ref="cameraElement"
-    desired-camera="founder"
+    desired-camera="back"
     draw-overlay="true"
     v-on:opened="onOpened"
     :active="active"
